@@ -18,11 +18,11 @@ quadrent - What quadrent the bearing is in
 
 Quad Setup for Bearings
 (4) E-, N+      |   (1) E+, N+
-    360-Bearing |       No Change
+    360+Bearing |       No Change
                 |
 ---------------------------------
 (3) E-, N-      |   (2) E+, N-
-    Bearing+180 |       180-Bearing
+    Bearing-180 |       180+Bearing
                 |
 
 '''
@@ -53,6 +53,28 @@ def calculateDB(e1, n1, e2, n2):
 Either calls all coordinates listed in the assignment with a traveled distance or
 allows the user to input two sets of coordinates. Then prints the output to the terminal.
 '''
+def outputAnswers(question, des):
+
+    if question == 'A':
+        
+        print(des)
+        print(quadrant)
+        print(f'Eastings {eastings}')
+        print(f'Northings {northings}')
+        print(f'Distance: {d:.3f} kilometers\nBearing: {b:.3f}\xb0 Degrees')
+        print()
+
+    if question == 'M':
+
+        print()
+        print('#'*50)
+        print()
+        print(quadrant)
+        print(f'Eastings {eastings}')
+        print(f'Northings {northings}')
+        print(f'Distance: {d:.3f} kilometers\nBearing: {b:.3f}\xb0 Degrees')
+        print()
+        print('#'*50)
 
 while True:
     question = input('Enter Eastings and Northings (M)anually or use (A)ssignment Coordinates (M or A)?').upper()
@@ -72,12 +94,8 @@ while True:
         for item in coordlist:
             
             d, b, eastings, northings, quadrant = calculateDB(item[0], item[1], item[2], item[3])
-            print(item[4])
-            print(quadrant)
-            print(f'Eastings {eastings}')
-            print(f'Northings {northings}')
-            print(f'Distance: {d:.3f} kilometers\nBearing: {b:.3f}\xb0 Degrees')
-            print()
+            question = outputAnswers('A', item[4])
+
             totaldist.append(d)  
             
         print(f'Total Traveled Distance is {sum(totaldist):.3f} kilometers')
@@ -90,14 +108,7 @@ while True:
         n2 = int(input('Enter Northings Ending Point: '))
 
         d, b, eastings, northings, quadrant = calculateDB(e1, n1, e2, n2)
-        
-        print('#'*50)
-        print(quadrant)
-        print(f'Eastings {eastings}')
-        print(f'Northings {northings}')
-        print(f'Distance: {d:.3f} kilometers\nBearing: {b:.3f}\xb0 Degrees')
-        print()
-        print('#'*50)
+        question = outputAnswers('M', None)
         break
     else:
         print('Enter a valid option.')
