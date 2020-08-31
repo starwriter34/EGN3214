@@ -17,14 +17,15 @@ northings - Distance traveled or measured northward
 quadrent - What quadrent the bearing is in
 
 Quad Setup for Bearings
-(4) E-, N+      |   (1) E+, N+
-    360+Bearing |       No Change
-                |
----------------------------------
-(3) E-, N-      |   (2) E+, N-
-    Bearing-180 |       180+Bearing
-                |
-
+        360°        0°
+    (4) E-, N+      |   (1) E+, N+
+        360+Bearing |       No Change
+                    |
+270° --------------------------------- 90°
+    (3) E-, N-      |   (2) E+, N-
+        Bearing-180 |       180+Bearing
+                    |
+                   180°
 '''
 import math
 
