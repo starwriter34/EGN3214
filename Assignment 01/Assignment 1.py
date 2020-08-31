@@ -44,7 +44,7 @@ def calculateDB(e1, n1, e2, n2):
         b = 180+math.degrees(math.atan((e2-e1)/(n2-n1)))
     elif eastings < 0 and northings < 0:
         quadrant = 'Third Quadrant E-, N-'
-        b = 180+math.degrees(math.atan((e2-e1)/(n2-n1)))
+        b = math.degrees(math.atan((e2-e1)/(n2-n1)))
     elif eastings < 0 and northings > 0:
         quadrant = 'Fourth Quadrant E-, N+'
         b = 360 + math.degrees(math.atan((e2-e1)/(n2-n1)))
