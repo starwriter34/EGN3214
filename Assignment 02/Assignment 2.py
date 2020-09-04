@@ -4,21 +4,41 @@ Interpolation
 08/31/2020
 EGN3214 - Assignment 2
 
-https://youtu.be/Sp4EuKFYMHc?t=598
+Variables:
+
+xp = list of rain fall in hours
+fp = list of rain fall in inches
+i = throw away variable for hours
+plural = logic for hours or hour depending on the amout of time entered
 '''
 
 import numpy as np
 
-# xp = [0.35, 1.27, 3.47, 5.87]
-# fp = [9.57, 11.35, 15.65, 19.57]
+xp = [0, 1, 2, 5, 7, 8, 10, 12, 15]
+fp = [0, 0.4, 0.6, 1.3, 2.1, 2.9, 3.4, 3.7, 3.9]
 
-# xp = [1.2, 2.3, 3.4, 4.0, 5.6, 7.8, 9.3]
-# fp = [0.999, 0.99, 0.9, 0.5, 0.1, 0.01, 0.001]
+while True:
+    question = input('Enter Time in hours (M)anually or use (A)ssignment Times (M or A)? ').upper()
 
-# print(f'Rain call chance is {np. interp(7.0, xp, fp)*100:.2f}% ')
+    if question == 'A':
 
-#xp = [0, 1.2, 2.5, 3.7]
-#fp = [0, 7.5, 11.4, 14.7]
+        for i in range(1,16):
+            if i > 1:
+                plural = 'hours'
+            else:
+                plural = 'hour'
 
-#print(np. interp(2.0, xp, fp))
-#print(np. interp(0.5, xp, fp))
+            print(f'The rain fall for {i} {plural} is {np.interp(i, xp, fp):.2f} inches.')
+        break
+    
+    if question == 'M':
+
+        i = float(input('Enter Time in hours (number can be a float) '))
+        
+        if i > 1:
+            plural = 'hours'
+        else:
+            plural = 'hour'
+
+        print(f'The rain fall for {i} {plural} is {np.interp(i, xp, fp):.2f} inches.')
+        break
