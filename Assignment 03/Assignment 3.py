@@ -42,14 +42,10 @@ def investmentGB(pv, fv):
     print()
     print('*'*50)
 
-    
-
 while continue_yn=='y':
 
     if question == 'ask':
         question = input('Do you wish to (M)anually Calculate your PV & FV, or run the (A)ssignment Numbers (M or A)?').upper()
-    else:
-        question = 'M'
 
     if question == 'M':
         print()
@@ -58,8 +54,8 @@ while continue_yn=='y':
         nper = float(input("Enter in the Number of Years: "))
         pmt = float(input("Enter in the Yearly Revenue: "))
 
-        pv = np.pv(rate, nper,0,-cash)
-        fv = np.fv(rate, nper,-pmt,pv)
+        pv = np.pv(rate, nper, 0, -cash)
+        fv = np.fv(rate, nper, -pmt, pv)
 
         investmentGB(pv, fv)
         
@@ -71,8 +67,8 @@ while continue_yn=='y':
         
         for (i, j) in zip(cash, pmt):
             
-            pv = np.pv(rate, nper,0,-i)
-            fv = np.fv(rate, nper,-j ,pv)
+            pv = np.pv(rate, nper, 0, -i)
+            fv = np.fv(rate, nper, -j , pv)
 
             investmentGB(pv, fv)
         break
