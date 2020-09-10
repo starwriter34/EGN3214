@@ -32,11 +32,10 @@ def investmentGB(pv, fv):
     
     elif pv < fv:
         investment = "Good Investment"
-    
-    print('*'*50)
+       
     print()
-    print(f'The Future Value: {fv:.2f}')
-    print(f'The Present Value: {pv:.2f}')
+    print(f'The Future Value:$ {fv:.2f}')
+    print(f'The Present Value:$ {pv:.2f}')
     print()
     print(investment)
     print()
@@ -57,6 +56,12 @@ while continue_yn=='y':
         pv = np.pv(rate, nper, 0, -cash)
         fv = np.fv(rate, nper, -pmt, pv)
 
+        print('*'*50)
+        print(f'Intial Investment:$ {cash}')
+        print(f'Intrest Rate: {rate*100}%')
+        print(f'Revenue:$ {pmt}')
+        print(f'Number of Periods: {nper}')
+
         investmentGB(pv, fv)
         
         print()
@@ -69,6 +74,12 @@ while continue_yn=='y':
             
             pv = np.pv(rate, nper, 0, -i)
             fv = np.fv(rate, nper, -j , pv)
+
+            print('*'*50)
+            print(f'Intial Investment:$ {i}')
+            print(f'Intrest Rate: {rate*100}%')
+            print(f'Revenue:$ {j}')
+            print(f'Number of Periods: {nper}')
 
             investmentGB(pv, fv)
         break
