@@ -27,15 +27,18 @@ continue_yn='y'
 question = 'ask'
 
 def investmentGB(pv, fv):
-    if pv > fv:
-        investment = "Bad Investment"
-    
-    elif pv < fv:
-        investment = "Good Investment"
+
+    rv = fv+pv
        
+    if (rv >= 0):
+        investment = 'Good Investment'
+    else:
+        investment = 'Bad Investment'
+        
     print()
     print(f'The Future Value:$ {fv:.2f}')
     print(f'The Present Value:$ {pv:.2f}')
+    print(f'Return Value:$ {rv:.2f}')
     print()
     print(investment)
     print()
@@ -53,8 +56,8 @@ while continue_yn=='y':
         nper = float(input("Enter in the Number of Years: "))
         pmt = float(input("Enter in the Yearly Revenue: "))
 
-        pv = np.pv(rate, nper, 0, -cash)
-        fv = np.fv(rate, nper, -pmt, pv)
+        pv = np.pv(rate, nper, pmt, cash)
+        fv = np.fv(rate, nper, pmt, pv)
 
         print('*'*50)
         print(f'Intial Investment:$ {cash}')
@@ -72,8 +75,8 @@ while continue_yn=='y':
         
         for (i, j) in zip(cash, pmt):
             
-            pv = np.pv(rate, nper, 0, -i)
-            fv = np.fv(rate, nper, -j , pv)
+            pv = np.pv(rate, nper, j, i)
+            fv = np.fv(rate, nper, j , pv)
 
             print('*'*50)
             print(f'Intial Investment:$ {i}')
