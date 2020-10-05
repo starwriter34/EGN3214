@@ -2,7 +2,7 @@ import numpy as np
 np.set_printoptions(precision=3)
 np.set_printoptions(suppress=True)
 y = np.array([-65,0,20,0,0,0,20,0,0,0,-45,0,40,0,0,0,30])
-
+a = np.array(['AJ', 'AI', 'AB', 'BI',  'BH', 'BC', 'CH', 'CD', 'DH', 'DG', 'DE', 'EG',  'EF',  'JI',  'IH', 'HG', 'GF'])
 x = np.array(
     [
 [-1,0,-0.707, 0, 0,     0, 0,0, 0, 0,     0,0, 0, 0,     0, 0, 0],
@@ -29,4 +29,6 @@ x_inv = np.linalg.inv(x)
 
 z = np.dot(x_inv,y)
 
-print(z)
+# print(z)
+for b, z in zip(a,z):
+    print(f'{b}: {z:.2f}')
