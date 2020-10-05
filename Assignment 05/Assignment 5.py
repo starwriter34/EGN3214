@@ -2,7 +2,7 @@
 Chris Oakley
 Functions Part 1
 09/13/2020
-EGN3214 - Assignment 4
+EGN3214 - Assignment 5
 
 Variables:
 
@@ -23,6 +23,8 @@ feet - Q is converted to whole feet
 import math
 import numpy as np
 import time
+import matplotlib.pyplot as plt
+
 
 def TrapezoidalQ(n,b,y,z,s):
    # n is Manning's n - table at 
@@ -37,7 +39,7 @@ def TrapezoidalQ(n,b,y,z,s):
    Q = 1.49/n * A * math.pow(R, 2.0/3.0) * math.sqrt(s)
    return Q
 
-error = 0.0001
+error = 0.005
 b = 3
 z = 2
 s = 0.01
@@ -45,6 +47,8 @@ n = 0.022
 
 start = time.time()
 array = np.arange(1,2,error)
+q_results = []
+y_results = []
 
 for i in array:
     
@@ -53,7 +57,16 @@ for i in array:
     feet = math.floor(i)
     inches = (i * 12) % 12
 
+    q_results.append(Q)
+    y_results.append(i)
+
     if Q >= 50:
         print(f'At {Q:.10f} cfs the depth of the channel is {feet:.2f} feet, {inches:.2f} inches!')
         print(f'Took {(time.time()-start)*1000:.2f} milliseconds to find the answer.')
         break
+
+plt.xlabel("Channel Depth (Feet)")
+plt.ylabel("Channel Flow (Cubic Feet/Second)")
+plt.title(f'Channel Flow and Depth')
+plt.plot(y_results, q_results, color='red')
+plt.show()
