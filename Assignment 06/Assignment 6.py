@@ -1,4 +1,20 @@
+'''
+Chris Oakley
+Arrays and Matrices
+10/3/2020
+EGN3214 - Assignment 6
+
+Variables:
+
+a - Force Vector Names
+x - Main Array before inverse
+x_inv -  Inverse Main Array
+y - Force vectors on Nodes
+z - Final Output with Force Vectors and Nodes
+'''
 import numpy as np
+import matplotlib.pyplot as plt
+
 np.set_printoptions(precision=3)
 np.set_printoptions(suppress=True)
 y = np.array([65, 0, -20, 0, 0, 0, -20, 0, 0, 0, 45, 0, -40 , 0, 0, 0, -30])
