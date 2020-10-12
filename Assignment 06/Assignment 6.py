@@ -47,7 +47,7 @@ z = np.dot(x_inv,y)
 
 # print(z)
 for b, z in zip(a,z):
-    print(f'{b}: {z:.1f}')
+	print(f'{b}: {z:.1f}')
 
 '''
 AJ: -30.00 
