@@ -44,7 +44,7 @@ def calculatePlot():
     plt.scatter(pressure, volume, color='red')
     plt.show()
 
-temperature = str(input('Enter Temperate as Temperature and Unit, i.e. 40 C Units are C,F,K defualt K: ').upper())
+temperature = str(input('Enter Temperate as Temperature and Unit, i.e. 40 C Units are C,F,K default K: ').upper())
 # Convert F to Kelvin
 if temperature[-1] == 'F':
     temp = int(temperature[:-1])
