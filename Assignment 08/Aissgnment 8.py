@@ -27,19 +27,22 @@ while continue_yn=='y':
             continue_yn = input('Do you wish to continue? Y or N ').lower()
         else:
             t_table_ap = t_table
-
-            # t_table_ap = t_table_ap.sort_values('degC')
-            # t_table_ap = t_table_ap.reset_index(drop=True)
-
             table_columns = list(t_table_ap.columns)
             degC_list = t_table_ap['degC'].to_list()
+
             inter_values = []
+            t_tablenew = t_table
+
             for value in table_columns:
+
                 column_list = t_table_ap[value].to_list()
                 inter = np.interp(temp,degC_list,column_list)
                 inter_values.append(inter)
-            t_table_ap = t_table_ap[t_table_ap['degC']==temp]
+            
+            t_tablenew.loc[99] = inter_values
+            t_tablenew = t_tablenew.sort_values('degC')
+            t_tablenew = t_tablenew.reset_index(drop=True)
+            t_tablenew = t_tablenew[t_tablenew['degC']==temp]
 
-            print(inter_values)
-            # print(t_table_ap)
+            print(t_tablenew)
             continue_yn = input('Do you wish to continue? Y or N ').lower()
