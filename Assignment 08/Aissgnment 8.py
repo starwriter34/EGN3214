@@ -1,6 +1,5 @@
 import pandas as pd
 import numpy as np
-from pandas.io.sql import table_exists
 
 url=r'https://thermo.pressbooks.com/chapter/saturation-properties-temperature-table/'
 
@@ -14,8 +13,9 @@ t_table = t_table.drop(columns=['vg', 'ug', 'hfg', 'hg', 'sfg', 'sg'])
 continue_yn ='y'
 
 while continue_yn=='y':
-    temp = float(input('Enter a temperature from 0.01 to 373.95: '))
     t_table = t_table
+
+    temp = float(input('Enter a temperature from 0.01 to 373.95: '))
     if temp < 0.01 or temp > 373.95:
         print(f'The temperature is not valid {temp}.')
         print(f'Enter a valid value 0.01 to 373.95')
