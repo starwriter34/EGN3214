@@ -11,9 +11,13 @@ t_table = t_table.drop(columns=['vg', 'ug', 'hfg', 'hg', 'sfg', 'sg'])
 
 temp = float(input('Enter a temperature from 0.01 to 373.95: '))
 
-if temp < 0.01 or temp > 373.95:
-    print(f'The temperature is not valid {temp}.')
-    print(f'Enter a valid value 0.01 to 373.95')
+while continue_yn=='y':
+    t_table = t_table
+
+    temp = float(input('Enter a temperature from 0.01 to 373.95: '))
+    if temp < 0.01 or temp > 373.95:
+        print(f'The temperature is not valid {temp}.')
+        print(f'Enter a valid value 0.01 to 373.95')
 
 else:
     if temp in t_table.degC.values:
