@@ -10,7 +10,7 @@ t_table = t_table.rename({'°C': 'degC'}, axis=1)
 t_table = t_table.drop(columns=['vg', 'ug', 'hfg', 'hg', 'sfg', 'sg'])
 
 temp = float(input('Enter a temperature from 0.01 to 373.95: '))
-continue_yn = y
+continue_yn = 'y'
 
 while continue_yn=='y':
     t_table = t_table
