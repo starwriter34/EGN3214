@@ -21,11 +21,11 @@ break_for = False
 
 for a in range(1,numbreak):
     for b in range(a+1,numbreak):
-        for c in range(b+1,numbreak):
-            if (a+b+c)==numbreak and (a**2+b**2)==c**2:
-                print(a*b*c)
-                break_for = True
-        if break_for == True:
-            break
+        c = numbreak-a-b
+       
+        if (a**2+b**2)==c**2:
+            print(f' a: {a} b: {b} c: {c}')
+            print(a*b*c)
+            break_for = True
     if break_for == True:
         break
