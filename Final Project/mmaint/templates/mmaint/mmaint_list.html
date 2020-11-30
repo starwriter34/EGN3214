@@ -1,0 +1,465 @@
+{% extends "list.html" %}
+    {% load crispy_forms_tags %}
+
+    {% block list_title %}
+        Machine Maintenance Status
+    {% endblock list_title %}
+
+    {% block list_back_url %}
+        {% url 'blog-home' %}
+    {% endblock list_back_url %}
+
+    {% block extra_button_url %}
+        {% url 'machinestatuscreate' %}
+    {% endblock extra_button_url %}
+
+    {% block extra_button_title %}
+        Add Machine
+    {% endblock extra_button_title %}
+
+    {% block action_url %}
+        {% url 'machinestatuslist' %}
+    {% endblock action_url %}
+
+    {% block search_label %}
+    Machine Search
+    {% endblock search_label %}
+
+    {% block search_placeholder %}
+    Search Machine Name
+    {% endblock search_placeholder %}
+
+    {% block search_clear_url %}
+        {% url 'machinestatuslist' %}
+    {% endblock search_clear_url %}
+
+    {% block chart_title_table_headers %}
+        <th scope="col" colspan=6 class="text-center align-middle h2 text-light">Charts</th>
+    {% endblock chart_title_table_headers %}
+
+    {% block chart_table_headers %}
+        <th scope="col" class="text-center align-middle h5">Life</th>
+        <th scope="col" class="text-center align-middle h5">Current Year</th>
+        <th scope="col" class="text-center align-middle h5">First Quarter<br/><em class="text-warning">Current Year</em></th>
+        <th scope="col" class="text-center align-middle h5">Second Quarter<br/><em class="text-warning">Current Year</em></th>
+        <th scope="col" class="text-center align-middle h5">Third Quarter<br/><em class="text-warning">Current Year</em></th>
+        <th scope="col" class="text-center align-middle h5">Fourth Quarter<br/><em class="text-warning">Current Year</em></th>
+    {% endblock chart_table_headers %}
+                
+    {% block chart_table_body %}
+    <!-- Life Chart -->
+        {% if lifechart_count >= 1 %}
+            <td class="align-middle text-center">
+                <a class="btn btn-success" href="{% url 'mmaint-charts' 'life' %}"  data-toggle="tooltip" data-placement="bottom"
+                title="Click for Life Report">
+                    <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-bar-chart-line-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M11 2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h1V7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7h1V2z"/>
+                    </svg>
+                </a>
+            </td>
+        {% else %}
+            <td class="align-middle text-center">
+                <a class="btn btn-altmute disabled" disabled aria-disabled="true" data-toggle="tooltip" data-placement="bottom" title="Click for Life Report">
+                    <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-bar-chart-line-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M11 2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h1V7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7h1V2z"/>
+                    </svg>
+                </a>
+            </td>
+        {% endif %}
+            <!-- Curernt Year Chart-->
+            {% if currentyearchart == True %}
+            <td class="align-middle text-center">
+                <a class="btn btn-success" href="{% url 'mmaint-charts' 'year' %}"  data-toggle="tooltip" data-placement="bottom"
+                title="Click for Current Year Report">
+                    <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-bar-chart-line-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M11 2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h1V7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7h1V2z"/>
+                    </svg>
+                </a>
+            </td>
+        {% else %}
+            <td class="align-middle text-center">
+                <a class="btn btn-altmute disabled" disabled aria-disabled="true" data-toggle="tooltip" data-placement="bottom" title="Click for Current Year Report" style="pointer-events: none;">
+                    <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-bar-chart-line-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M11 2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h1V7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7h1V2z"/>
+                    </svg>
+                </a>
+            </td>
+        {% endif %}
+            <!-- Q1 Chart -->
+            {% if qoneyearchart == True %}
+            <td class="align-middle text-center">
+                <a class="btn btn-success" href="{% url 'mmaint-charts' 'yearq1' %}"  data-toggle="tooltip" data-placement="bottom"
+                title="Click for Current Year Report">
+                    <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-bar-chart-line-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M11 2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h1V7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7h1V2z"/>
+                    </svg>
+                </a>
+            </td>
+        {% else %}
+            <td class="align-middle text-center">
+                <a class="btn btn-altmute disabled" href="" disabled aria-disabled="true" data-toggle="tooltip" data-placement="bottom" title="Click for Current Year Report" style="pointer-events: none;">
+                    <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-bar-chart-line-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M11 2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h1V7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7h1V2z"/>
+                    </svg>
+                </a>
+            </td>
+        {% endif %}
+            <!-- Q2 Chart -->
+            {% if qtwoyearchart == True %}
+            <td class="align-middle text-center">
+                <a class="btn btn-success" href="{% url 'mmaint-charts' 'yearq2' %}"  data-toggle="tooltip" data-placement="bottom"
+                title="Click for Current Year Report">
+                    <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-bar-chart-line-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M11 2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h1V7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7h1V2z"/>
+                    </svg>
+                </a>
+            </td>
+        {% else %}
+            <td class="align-middle text-center">
+                <a class="btn btn-altmute disabled" href="" disabled aria-disabled="true" data-toggle="tooltip" data-placement="bottom" title="Click for Current Year Report" style="pointer-events: none;">
+                    <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-bar-chart-line-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M11 2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h1V7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7h1V2z"/>
+                    </svg>
+                </a>
+            </td>
+        {% endif %}
+            <!-- Q3 Chart -->
+            {% if qthreeyearchart == True %}
+            <td class="align-middle text-center">
+                <a class="btn btn-success" href="{% url 'mmaint-charts' 'yearq3' %}"  data-toggle="tooltip" data-placement="bottom"
+                title="Click for Current Year Report">
+                    <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-bar-chart-line-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M11 2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h1V7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7h1V2z"/>
+                    </svg>
+                </a>
+            </td>
+        {% else %}
+            <td class="align-middle text-center">
+                <a class="btn btn-altmute disabled" href="" disabled aria-disabled="true" data-toggle="tooltip" data-placement="bottom" title="Click for Current Year Report" style="pointer-events: none;">
+                    <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-bar-chart-line-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M11 2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h1V7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7h1V2z"/>
+                    </svg>
+                </a>
+            </td>
+        {% endif %}
+            <!-- Q4 Chart -->
+            {% if qfouryearchart == True %}
+            <td class="align-middle text-center">
+                <a class="btn btn-success" href="{% url 'mmaint-charts' 'yearq4' %}"  data-toggle="tooltip" data-placement="bottom"
+                title="Click for Current Year Report">
+                    <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-bar-chart-line-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M11 2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h1V7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7h1V2z"/>
+                    </svg>
+                </a>
+            </td>
+        {% else %}
+            <td class="align-middle text-center">
+                <a class="btn btn-altmute disabled" href="" disabled aria-disabled="true" data-toggle="tooltip" data-placement="bottom" title="Click for Current Year Report" style="pointer-events: none;">
+                    <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-bar-chart-line-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M11 2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h1V7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7h1V2z"/>
+                    </svg>
+                </a>
+            </td>
+        {% endif %}
+        </tr>
+
+    {% endblock chart_table_body %}
+
+    {% block list_title_table_headers %}
+    <th scope="col" colspan=5 class="text-center align-middle h2 text-light">Machine Status</th>
+    {% endblock list_title_table_headers %}
+
+    {% block list_table_headers %}
+        <style>
+            button:disabled {
+                pointer-events: none !important;
+            }
+        </style>
+
+        {% if perms.mmaint.mmaint_all or perms.mmaint.pm_preventative_maintenance and perms.mmaint.pso_indicating_fixture %}
+            <th scope="col" class="text-center align-middle h5" width="10%">Machine Name</th>
+            <th scope="col" class="text-center align-middle h5" width="45%">Notes</th>
+            <th scope="col" class="text-center align-middle h5" width="20%">Status</th>
+            <th scope="col" class="text-center align-middle h5" width="15%">Status Update</th>
+            <th scope="col" class="text-center align-middle h5" width="10%">Update</th>
+        {% elif perms.mmaint.machine_down_supervisor or perms.mmaint.pm_preventative_maintenance or perms.mmaint.pso_indicating_fixture %}
+            <th scope="col" class="text-center align-middle h5" width="10%">Machine Name</th>
+            <th scope="col" class="text-center align-middle h5" width="50%">Notes</th>
+            <th scope="col" class="text-center align-middle h5" width="20%">Status</th>
+            <th scope="col" class="text-center align-middle h5" width="10%">Status Update</th>
+            <th scope="col" class="text-center align-middle h5" width="10%">Update</th>
+        {% else %}
+            <th scope="col" class="text-center align-middle h5" width="10%">Machine Name</th>
+            <th scope="col" class="text-center align-middle h5" width="70%">Notes</th>
+            <th scope="col" class="text-center align-middle h5" width="20%">Status</th>
+        {% endif %}
+    {% endblock list_table_headers%}
+
+        {% block list_table_body %}
+    <!-- ##########################################################################
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+                                    Permissions View
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    ########################################################################## -->
+        {% if perms.mmaint.change_machinestatus %}
+            {% for parents in mmaint %}
+        <!-- Set Running Background -->
+                {% if parents.get_status_display == "Running" %}                                
+                    <tr class="align-middle">
+        <!-- Set Down for Repair Background -->
+                {% elif parents.get_status_display == "Down for Repair" %}
+                    <tr class="align-middle" style="background: #f7d4d7;">
+        <!-- Set Down for Fixture Reindication Background -->
+                {% elif parents.get_status_display == "Down for PM" or parents.get_status_display == "Fixture Indication" %}
+                    <tr class="align-middle" style="background: #ffc;">
+                {% endif %}
+        <!-- Machine Name -->
+                    <td class="align-middle text-center">
+                        <a class="btn btn-primary" href="{% url 'machinestatusdetail' parents.id %}"  data-toggle="tooltip" data-placement="bottom"
+                        title="Click for Machine Details">{{parents.machine_name|upper}}</a>
+                    </td>
+    <!--
+        ############################### 
+            Status Machine Down
+        ############################### 
+    -->
+                    {% if parents.get_status_display == "Down for Repair" or parents.get_status_display == "Down for PM" or parents.get_status_display == "Fixture Indication" %}
+            <!-- Temporary Note Check -->
+                        {% if parents.notes|length > 0 %}
+                            <td class="align-middle text-center">
+                                {{ parents.notes }}
+                            </td>
+                        {% else %}
+                            <td class="align-middle text-center">
+                                <p class="h5 text-danger">
+                                    <strong>Add a Temporary Note
+                                    </strong>
+                                </p>
+                            </td>
+                        {% endif %}
+    <!--
+        ############################### 
+            Status Update Buttons
+            Machine Running Button
+        ############################### 
+    --> 
+                <!-- Down for Repair Status Button -->
+                    {% if parents.get_status_display == "Down for Repair" %}
+                            <td class="align-middle text-center">
+                                <button type="button" class="btn btn-danger" disabled aria-disabled="true">Down for Repair</button>
+                            </td>
+                <!-- Down for PM Status Button -->
+                        {% elif parents.get_status_display == "Down for PM" %}
+                            <td class="align-middle text-center">
+                                <button type="button" class="btn btn-secondary" disabled aria-disabled="true">Down for PM</button>
+                            </td>
+                <!-- Down for Fixture Reindication Status Button -->
+                        {% elif parents.get_status_display == "Fixture Indication" %}
+                            <td class="align-middle text-center">
+                                <button type="button" class="btn btn-secondary" disabled aria-disabled="true">Fixture Indication</button>
+                            </td>
+                        {% endif %}
+                        <td class="align-middle text-center">
+                            <a href="{% url 'machinestatus-operation' operation='up' pk=parents.id %}"
+                                class="btn btn-sm btn-success align-middle" data-toggle="tooltip" data-placement="bottom"
+                                title="Machine Running">
+                                <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-play-fill align-middle"
+                                    fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M11.596 8.697l-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z" />
+                                </svg>
+                            </a>
+                        </td>
+    <!--        
+        ############################# 
+            Status Machine Running
+            Machine Down Button
+        ############################# 
+    -->
+            {% elif parents.get_status_display == "Running" %}
+            <!-- Empty Note -->
+                    <td class="align-middle text-center">
+                    </td>
+            <!-- Running Status Button -->
+                    <td class="align-middle text-center">
+                        <button type="button" class="btn btn-success" disabled aria-disabled="true">Running</button>
+                    </td>
+                    {% if perms.mmaint.delete_machinestatus or perms.mmaint.mmaint_all%}
+            <!-- Machine Down Button -->
+                        <td class="align-middle text-center">
+                            <a href="{% url 'machinestatus-operation' operation='down' pk=parents.id %}"
+                                class="btn btn-sm btn-danger" data-toggle="tooltip" data-placement="bottom"
+                                title="Machine Down">
+                                <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-stop-fill align-middle"
+                                    fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M5 3.5h6A1.5 1.5 0 0 1 12.5 5v6a1.5 1.5 0 0 1-1.5 1.5H5A1.5 1.5 0 0 1 3.5 11V5A1.5 1.5 0 0 1 5 3.5z" />
+                                </svg>
+                            </a>
+            <!-- Machine Down for PM Button -->
+                            <a href="{% url 'machinestatus-operation' operation='pm' pk=parents.id %}"
+                                class="btn btn-sm btn-danger align-middle" data-toggle="tooltip" data-placement="bottom"
+                                title="Machine Down for Preventative Maintenance">
+                                <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-droplet-fill align-middle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" d="M8 16a6 6 0 0 0 6-6c0-1.655-1.122-2.904-2.432-4.362C10.254 4.176 8.75 2.503 8 0c0 0-6 5.686-6 10a6 6 0 0 0 6 6zM6.646 4.646c-.376.377-1.272 1.489-2.093 3.13l.894.448c.78-1.559 1.616-2.58 1.907-2.87l-.708-.708z"/>
+                                </svg>
+                            </a>
+            <!-- Machine Down for Fixture Reindication Button -->
+                            <a href="{% url 'machinestatus-operation' operation='fixture' pk=parents.id %}"
+                                class="btn btn-sm btn-danger align-middle" data-toggle="tooltip" data-placement="bottom"
+                                title="Machine Down for Reindication of Fixture">
+                                <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-signpost-2-fill align-middle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M7 1.414V16h2V1.414a1 1 0 0 0-2 0z"/>
+                                    <path d="M1 3a1 1 0 0 1 1-1h11.5a1 1 0 0 1 .8.4l.975 1.3a.5.5 0 0 1 0 .6L14.3 5.6a1 1 0 0 1-.8.4H2a1 1 0 0 1-1-1V3zm14 5a1 1 0 0 0-1-1H2.5a1 1 0 0 0-.8.4L.725 8.7a.5.5 0 0 0 0 .6l.975 1.3a1 1 0 0 0 .8.4H14a1 1 0 0 0 1-1V8z"/>
+                                </svg>
+                            </a>
+                        </td>
+                    {% elif perms.mmaint.pso_indicating_fixture and perms.mmaint.pm_preventative_maintenance %}
+                        <td class="align-middle text-center">           
+            <!-- Machine Down for PM Button -->
+                            <a href="{% url 'machinestatus-operation' operation='pm' pk=parents.id %}"
+                                class="btn btn-sm btn-danger align-middle" data-toggle="tooltip" data-placement="bottom"
+                                title="Machine Down for Preventative Maintenance">
+                                <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-droplet-fill align-middle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" d="M8 16a6 6 0 0 0 6-6c0-1.655-1.122-2.904-2.432-4.362C10.254 4.176 8.75 2.503 8 0c0 0-6 5.686-6 10a6 6 0 0 0 6 6zM6.646 4.646c-.376.377-1.272 1.489-2.093 3.13l.894.448c.78-1.559 1.616-2.58 1.907-2.87l-.708-.708z"/>
+                                </svg>
+                            </a>
+            <!-- Machine Down for Fixture Reindication Button -->
+                            <a href="{% url 'machinestatus-operation' operation='fixture' pk=parents.id %}"
+                                class="btn btn-sm btn-danger align-middle" data-toggle="tooltip" data-placement="bottom"
+                                title="Machine Down for Reindication of Fixture">
+                                <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-signpost-2-fill align-middle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M7 1.414V16h2V1.414a1 1 0 0 0-2 0z"/>
+                                    <path d="M1 3a1 1 0 0 1 1-1h11.5a1 1 0 0 1 .8.4l.975 1.3a.5.5 0 0 1 0 .6L14.3 5.6a1 1 0 0 1-.8.4H2a1 1 0 0 1-1-1V3zm14 5a1 1 0 0 0-1-1H2.5a1 1 0 0 0-.8.4L.725 8.7a.5.5 0 0 0 0 .6l.975 1.3a1 1 0 0 0 .8.4H14a1 1 0 0 0 1-1V8z"/>
+                                </svg>
+                            </a>
+                        </td>
+            <!-- Machine Down for Fixture Reindication Button -->
+                    {% elif perms.mmaint.pso_indicating_fixture %}
+                        <td class="align-middle text-center">
+                            <a href="{% url 'machinestatus-operation' operation='fixture' pk=parents.id %}"
+                                class="btn btn-sm btn-danger align-middle" data-toggle="tooltip" data-placement="bottom"
+                                title="Machine Down for Reindication of Fixture">
+                                <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-signpost-2-fill align-middle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M7 1.414V16h2V1.414a1 1 0 0 0-2 0z"/>
+                                    <path d="M1 3a1 1 0 0 1 1-1h11.5a1 1 0 0 1 .8.4l.975 1.3a.5.5 0 0 1 0 .6L14.3 5.6a1 1 0 0 1-.8.4H2a1 1 0 0 1-1-1V3zm14 5a1 1 0 0 0-1-1H2.5a1 1 0 0 0-.8.4L.725 8.7a.5.5 0 0 0 0 .6l.975 1.3a1 1 0 0 0 .8.4H14a1 1 0 0 0 1-1V8z"/>
+                                </svg>
+                            </a>
+                        </td>
+            <!-- Machine Down for PM Button -->
+                    {% elif perms.mmaint.pm_preventative_maintenance %}
+                        <td class="align-middle text-center">
+                            <a href="{% url 'machinestatus-operation' operation='pm' pk=parents.id %}"
+                                class="btn btn-sm btn-danger align-middle" data-toggle="tooltip" data-placement="bottom"
+                                title="Machine Down for Preventative Maintenance">
+                                <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-droplet-fill align-middle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" d="M8 16a6 6 0 0 0 6-6c0-1.655-1.122-2.904-2.432-4.362C10.254 4.176 8.75 2.503 8 0c0 0-6 5.686-6 10a6 6 0 0 0 6 6zM6.646 4.646c-.376.377-1.272 1.489-2.093 3.13l.894.448c.78-1.559 1.616-2.58 1.907-2.87l-.708-.708z"/>
+                                </svg>
+                            </a>
+                        </td>    
+            <!-- Machine Down Button -->
+                    {% elif perms.mmaint.machine_down_supervisor %}
+                        <td class="align-middle text-center">
+                            <a href="{% url 'machinestatus-operation' operation='down' pk=parents.id  %}"
+                                class="btn btn-sm btn-danger align-middle" data-toggle="tooltip" data-placement="bottom"
+                                title="Machine Down">
+                                <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-stop-fill align-middle"
+                                    fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M5 3.5h6A1.5 1.5 0 0 1 12.5 5v6a1.5 1.5 0 0 1-1.5 1.5H5A1.5 1.5 0 0 1 3.5 11V5A1.5 1.5 0 0 1 5 3.5z" />
+                                </svg>
+                            </a>
+                        </td>
+                    {% endif %}
+                {% endif %}
+            <!-- Update Button -->
+                    <td class="align-middle text-center">
+                        <a href="{% url 'machinestatusupdate' parents.id %}" class="btn btn-alt btn-secondary">Update</a>
+                    </td>
+                </tr>
+            {% endfor %}
+    <!-- ##########################################################################
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+                        No Permissions or Login View 
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    ########################################################################## -->
+        {% else %}
+            {% for parents in mmaint %}
+            <!-- Running Background -->
+                {% if parents.get_status_display == "Running" %}                                
+                    <tr class="align-middle">
+            <!-- Down for Repair Background -->
+                {% elif parents.get_status_display == "Down for Repair" %}
+                    <tr class="align-middle" style="background: #f7d4d7;">
+            <!-- Down for Fixture Reindication Background -->
+                {% elif parents.get_status_display == "Down for PM" or parents.get_status_display == "Fixture Indication" %}
+                    <tr class="align-middle" style="background: #ffc;">
+                {% endif %}
+                    <td class="align-middle text-center">
+                        <button class="btn btn-primary" href="{% url 'machinestatusdetail' parents.id %}"  data-toggle="tooltip" data-placement="bottom"
+                        title="Click for Machine Details" disabled>{{parents.machine_name|upper}}</a>
+                    </td>
+    <!--
+        ############################# 
+            Status Machine Running
+            Machine Down Button
+        ############################# 
+    -->
+    {% if parents.get_status_display == "Down for Repair" or parents.get_status_display == "Down for PM" or parents.get_status_display == "Fixture Indication" %}
+            <!-- Temporary Note Check -->
+                    {% if parents.notes|length > 0 %}
+                        <td class="align-middle text-center">
+                            {{ parents.notes }}
+                        </td>
+                    {% else %}
+                        <td class="align-middle text-center">
+                            <p class="h5 text-danger">
+                                <strong>Add a Temporary Note
+                                </strong>
+                            </p>
+                        </td>
+                    {% endif %}
+            <!-- Down for Repair Status Button -->
+                    {% if parents.get_status_display == "Down for Repair" %}
+                            <td class="align-middle text-center">
+                                <button type="button" class="btn btn-danger" disabled aria-disabled="true">Down for Repair</button>
+                            </td>
+            <!-- Down for PM Status Button -->
+                    {% elif parents.get_status_display == "Down for PM" %}
+                        <td class="align-middle text-center">
+                            <button type="button" class="btn btn-secondary" disabled aria-disabled="true">Down for PM</button>
+                        </td>
+            <!-- Down for Fixture Reindication Status Button -->
+                    {% elif parents.get_status_display == "Fixture Indication" %}
+                        <td class="align-middle text-center">
+                            <button type="button" class="btn btn-secondary" disabled aria-disabled="true">Fixture Indication</button>
+                        </td>
+                    {% endif %}
+    <!--
+        ############################# 
+            Status Machine Running
+            Machine Down Button
+        ############################# 
+    -->
+                {% elif parents.get_status_display == "Running" %}
+            <!-- Empty Note -->
+                    <td class="align-middle text-center">
+                    </td>
+            <!-- Running Status Button -->
+                    <td class="align-middle text-center">
+                        <button type="button" class="btn btn-success" disabled aria-disabled="true">Running</button>
+                    </td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+        {% endif %}
+    {% endblock list_table_body %}
+
+    {% comment %} Help Wiki Modal {% endcomment %}
+
+    {% block modal_title %}
+    {% endblock modal_title %}
+    
+    {% block modal_body %}
+    {% endblock modal_body %}
+
+    {% block modal_footer %}
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+    {% endblock modal_footer %}

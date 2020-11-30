@@ -1,0 +1,46 @@
+{% extends 'crud.html' %}
+{% comment 'Order of operations' %}
+    Crud Title 
+        1. Checks to see which modelname is passed.
+        2. Then it checks for create_update to see which is passed.
+        3. Applies what ever options it needs to pass.
+{% endcomment %}
+    {% block crud_title %}
+        Create Machine Down Record for {{machinedownreports.machine_id}}
+    {% endblock crud_title%}
+{% comment 'Order of operations' %}
+    Crud Back Button URL
+        1. Checks to see which modelname is passed.
+        2. Then it checks for create_update to see which is passed.
+        3. Applies what ever options it needs to pass.
+{% endcomment %}
+    {% block crud_back_btn_url %}
+        {% url 'machinestatuslist' %}
+    {% endblock crud_back_btn_url %}
+{% comment 'Order of operations' %}
+    Crud Help Wiki URL
+        1. Checks to see which modelname is passed.
+        2. Then it checks for create_update to see which is passed.
+        3. Applies what ever options it needs to pass.
+{% endcomment %}
+    {% block helpwiki_url %}
+       
+    {% endblock helpwiki_url %}
+{% comment 'Order of operations' %}
+    Crud Submit Title 
+        1. Checks to see which modelname is passed.
+        2. Then it checks for create_update to see which is passed.
+        3. Applies what ever options it needs to pass.
+{% endcomment %}
+    {% block crud_submit_title %}
+        Submit Machine Down Record
+    {% endblock crud_submit_title %}
+{% comment 'Order of operations' %}
+    Crud Cancel Button URL 
+        1. Checks to see which modelname is passed.
+        2. Then it checks for create_update to see which is passed.
+        3. Applies what ever options it needs to pass.
+{% endcomment %}
+    {% block crud_cancel_btn_url %}
+       {% url 'machinestatuslist' %}   
+    {% endblock crud_cancel_btn_url %}

@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load humanize %}
+{% load static %}
+{% block content %}
+<div class="container">
+	<div class="row mt-2">
+		<div class="col-sm-12 mt-2">
+			<div class="card bg-light">
+				<div class="card-header bg-light">
+                    <h1 class="card-title text-center">{{ object.machine_id }}</h1>
+                <div class="card-title text-right mb-2">
+                <!-- Back Button -->
+                    <a href="{% url 'machinestatuslist' %}" class="btn btn-outline-success" style="float: left;">Back</a>
+                <!-- Edit Machine Button -->
+                    <a href="{% url 'machinestatusupdate' object.id %}" class="btn btn-outline-info mt-2">Edit Machine</a>
+                </div></div>
+                <div class="card-body bg-light">
+                    <table class="table table-responsive-md table-bordered pb-0 mb-0" id="res">
+                        <thead class="thead-dark">
+                            <tr class="text-light">
+                                <th scope="col" class="text-center"><h5>Downtime</h5></th>
+                                <th scope="col" class="text-center"><h5>Uptime</h5></th>
+                                <th scope="col" class="text-center"><h5>Down Duration (hours)</h5></th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan=3 class="align-middle text-center h3 table-warning" id="output"></td>
+                            </tr>
+                        {% for object in machinedown_all %}    
+                            <tr style="height: 50px;">
+                                <td class="align-middle text-center"><h5>{{ object.starttime }}</h5></td>
+                                <td class="align-middle text-center"><h5>{{ object.endtime }}</h5></td>
+                                <td class="align-middle text-center countable"><h5>{{ object.total }}</h5></td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                <!-- Table summing javascript function -->
+                    <script>
+                        var sum = 0;
+                        var table = document.getElementById("res");
+                        var tds = table.getElementsByClassName('countable');
+                        
+                        for(var i=0;i<tds.length;i++){
+                            sum += isNaN(tds[i].innerText) ? 0 : parseFloat(tds[i].innerText);
+                        }
+                        console.log(sum.toFixed(2))
+                        document.getElementById('output').innerHTML = sum + " Total Hours of Downtime" ;
+
+                    </script>
+                    {% endblock content %}

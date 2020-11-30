@@ -1,0 +1,106 @@
+{% extends 'crud.html' %}
+{% comment 'Order of operations' %}
+    Crud Title 
+        1. Checks to see which modelname is passed.
+        2. Then it checks for create_update to see which is passed.
+        3. Applies what ever options it needs to pass.
+{% endcomment %}
+    {% block crud_title %}
+        {% if modelname == 'machinestatus' %}
+            {% if create_update == 'create' %}
+                Create Machine
+            {% elif create_update == 'update' %}
+                Update Machine
+            {% endif %}
+        {% elif modelname == 'permanentrecords' %}
+            {% if create_update == 'create' %}
+                Create Permanent Machine Record
+            {% elif create_update == 'update' %}
+                Permanent Machine Record Update
+            {% endif %}
+        {% endif %}
+    {% endblock crud_title%}
+{% comment 'Order of operations' %}
+    Crud Back Button URL
+        1. Checks to see which modelname is passed.
+        2. Then it checks for create_update to see which is passed.
+        3. Applies what ever options it needs to pass.
+{% endcomment %}
+    {% block crud_back_btn_url %}
+        {% if modelname == 'machinestatus' %}
+            {% if create_update == 'create' %}
+                {% url 'machinestatuslist' %}
+            {% elif create_update == 'update' %}
+                {% url 'machinestatuslist' %}    
+            {% endif %}
+        {% elif modelname == 'permanentrecords' %}
+            {% if create_update == 'create' %}
+                {% url 'machinestatuslist' %}
+            {% elif create_update == 'update' %}
+                {% url 'machinestatusdetail' pk=object.machine_id_id %}    
+            {% endif %}
+        {% endif %}
+    {% endblock crud_back_btn_url %}
+{% comment 'Order of operations' %}
+    Crud Help Wiki URL
+        1. Checks to see which modelname is passed.
+        2. Then it checks for create_update to see which is passed.
+        3. Applies what ever options it needs to pass.
+{% endcomment %}
+    {% block helpwiki_url %}
+        {% if modelname == 'machinestatus' %}
+            {% if create_update == 'create' %}
+                pass
+            {% elif create_update == 'update' %}
+                pass
+            {% endif %}
+        {% elif modelname == 'permanentrecords' %}
+            {% if create_update == 'create' %}
+                pass
+            {% elif create_update == 'update' %}
+                pass
+            {% endif %}
+        {% endif %}
+    {% endblock helpwiki_url %}
+{% comment 'Order of operations' %}
+    Crud Submit Title 
+        1. Checks to see which modelname is passed.
+        2. Then it checks for create_update to see which is passed.
+        3. Applies what ever options it needs to pass.
+{% endcomment %}
+    {% block crud_submit_title %}
+        {% if modelname == 'machinestatus' %}
+            {% if create_update == 'create' %}
+                Submit Machine Record
+            {% elif create_update == 'update' %}
+                Update Machine Record    
+            {% endif %}
+        {% elif modelname == 'permanentrecords' %}
+            {% if create_update == 'create' %}
+                Submit Permanent Record
+            {% elif create_update == 'update' %}
+                Update Permanent Record    
+            {% endif %}
+        {% endif %}
+    {% endblock crud_submit_title %}
+{% comment 'Order of operations' %}
+    Crud Cancel Button URL 
+        1. Checks to see which modelname is passed.
+        2. Then it checks for create_update to see which is passed.
+        3. Applies what ever options it needs to pass.
+{% endcomment %}
+    {% block crud_cancel_btn_url %}
+        {% if modelname == 'machinestatus' %}    
+            {% if create_update == 'create' %}
+                {% url 'machinestatuslist' %}
+            {% elif create_update == 'update' %}
+                {% url 'machinestatuslist' %}    
+            {% endif %}
+        {% elif modelname == 'permanentrecords' %}
+            {% if create_update == 'create' %}
+                {% url 'machinestatuslist' %}
+            {% elif create_update == 'update' %}
+                {% url 'machinestatusdetail' pk=object.machine_id_id %}    
+            {% endif %}
+        {% endif %}
+    {% endblock crud_cancel_btn_url %}

@@ -1,0 +1,117 @@
+    {% extends "chart.html" %}
+
+{% comment %} Title for Header on main page {% endcomment %}
+        {% block title%}
+			Machine Maintenance Charts
+        {% endblock title %}
+
+{% comment %} Chart Date URL from urls.py {% endcomment %}
+        {% block chart_url %}
+        {% endblock chart_url %}
+
+{% comment %} The script for the chartjs.org {% endcomment %}
+        {% block chart %}
+			<script>
+				var ctx = document.getElementById('chart');
+				Chart.defaults.global.defaultFontColor = 'black';
+				Chart.defaults.global.defaultFontSize = 16;
+				Chart.defaults.scale.gridLines.color = "rgba(127, 127, 127, 0.2)"
+				Chart.defaults.global.animation = 0
+				var myChart = new Chart(ctx, {
+				type: 'bar',
+				data: {
+					
+					labels: [{% for label in labels %}'{{label.0}}',{% endfor %}],
+					datasets: [{
+						yAxisID: 'downtime',
+						label: 'Machine Downtime (hr)',
+						data: [{% for item in downtime_records %}{{item}},{% endfor %}],
+						backgroundColor: 'rgba(249, 159, 64, 0.3)',
+						borderColor: 'rgb(249, 159, 64)',
+						borderWidth: 1,
+						categoryPercentage: 1.0,
+						barPercentage: 1.0,
+						hoverBackgroundColor: 'rgb(249, 159, 64)',
+						order: 2,
+					},
+					{
+						yAxisID: 'count',
+						label: 'Times Down (*n)',
+						data: [{% for item in downtime_records_count %}{{item}},{% endfor %}],
+						backgroundColor: 'rgba(66, 9, 127, 0.3)',
+						borderColor: 'rgb(66, 9, 127)',
+						borderWidth: 1,
+						categoryPercentage: 1.0,
+						barPercentage: 1.0,
+						hoverBackgroundColor: 'rgb(66, 9, 127)',
+						order: 3,
+					},
+					{
+						label: 'Machine Downtime Overall Average (hr)',
+						data: [{% for item in average %}{{item}},{% endfor %}],
+						backgroundColor: 'rgba(96, 162, 169, 0.3)',
+						borderColor: 'rgb(96, 162, 169)',
+						borderWidth: 10,
+						pointRadius: 0,
+						hoverRadius: 0,
+						//pointStyle: 'rectRot',
+						fill: false,
+						type: 'line',
+						hoverBorderColor: 'rgb(96, 162, 169)',
+						hoverBackgroundColor:'rgb(96, 162, 169)',
+						steppedLine: 'after',
+						order: 1,
+					}],
+					
+				},
+				options: {
+					responsive: true,
+					layout: {
+						padding: {
+							left: 10,
+							right: 10,
+							top: 10,
+							bottom: 10
+						}
+					},
+					title: {
+						display: true,
+						text: '{{chart}} for Machine Downtime' ,
+					},
+					tooltips: {
+						mode: 'index',
+						intersect: true
+					},
+					legend: {
+						display: true
+							},
+					scales: {
+					yAxes: [{
+						// Machine Hours Count
+								display: true,
+								position: 'left',
+								id: 'downtime',
+						},
+						// Machine Down Counts
+						{
+								display: true,
+								position: 'right',
+								id: 'count',
+								ticks:{
+									beginAtZero: true,
+									precision: 0,
+								},
+								gridLines: {
+									drawOnChartArea: false
+								}
+							}],
+					xAxes:[{
+						ticks: {
+							padding: 10,
+						}
+					}]
+					}
+				}
+				});
+			</script>
+        {% endblock chart %}

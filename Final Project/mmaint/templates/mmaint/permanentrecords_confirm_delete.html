@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block title %}Delete Record {% endblock title %}
+{% block content %}
+<div class="container">
+	<div class="row m-2">
+		<div class="col-sm-12 mt-2">
+			<div class="card-deck">
+   			    <div class="card bg-light">
+					<div class="card-body bg-light">
+						<form method="POST">
+							{% csrf_token %}
+						<fieldset class="form-group">
+							<legend class="border-bottom mb-4 text-center h1">Delete Record</legend>
+								<h2>Are you sure you want to delete the Repair Action for <strong>"{{ permanentrecords.machine_id }}"</strong></h2>
+								<p>
+									<br/>
+									<strong>Reason:</strong> {{permanentrecords.get_reason_display }}<br/>
+									<strong>Date:</strong> {{ permanentrecords.date }}<br/>
+									<strong>Time:</strong> {{ permanentrecords.time }}<br/>
+									<br/>
+									<strong>Note:</strong> {{permanentrecords.note|linebreaks }}
+								</p>
+								<em><p class="text-danger text-center h4">This action cannot be undone!</p></em>
+						</fieldset>
+							<div class="form-group">
+        						<button class="btn btn-outline-danger" type="submit">Yes, Delete</button>
+        							<a class="btn btn-secondary" href="{% url 'permanentrecord-list' pk=permanentrecords.machine_id_id %}">Cancel</a>
+    						</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div> 
+{% endblock content %}

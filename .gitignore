@@ -1,3 +1,35 @@
 /venv/*
 .vscode/settings.json
 Assignment 01/~$signment1_Oakley.docx
+Final Project/mmaint/__pycache__/__init__.cpython-38.pyc
+Final Project/mmaint/__pycache__/admin.cpython-38.pyc
+Final Project/mmaint/__pycache__/apps.cpython-38.pyc
+Final Project/mmaint/__pycache__/choices.cpython-38.pyc
+Final Project/mmaint/__pycache__/forms.cpython-38.pyc
+Final Project/mmaint/__pycache__/models.cpython-38.pyc
+Final Project/mmaint/__pycache__/urls.cpython-38.pyc
+Final Project/mmaint/__pycache__/views.cpython-38.pyc
+Final Project/mmaint/migrations/__pycache__/__init__.cpython-38.pyc
+Final Project/mmaint/migrations/__pycache__/0001_initial.cpython-38.pyc
+Final Project/mmaint/migrations/__pycache__/0002_auto_20200921_1516.cpython-38.pyc
+Final Project/mmaint/migrations/__pycache__/0003_auto_20200922_0619.cpython-38.pyc
+Final Project/mmaint/migrations/__pycache__/0004_auto_20200922_1011.cpython-38.pyc
+Final Project/mmaint/migrations/__pycache__/0005_machinestatus_downtime.cpython-38.pyc
+Final Project/mmaint/migrations/__pycache__/0006_auto_20200922_1348.cpython-38.pyc
+Final Project/mmaint/migrations/__pycache__/0007_permanentrecords.cpython-38.pyc
+Final Project/mmaint/migrations/__pycache__/0008_auto_20200923_1309.cpython-38.pyc
+Final Project/mmaint/migrations/__pycache__/0009_auto_20200923_1310.cpython-38.pyc
+Final Project/mmaint/migrations/__pycache__/0010_machinedownreports.cpython-38.pyc
+Final Project/mmaint/migrations/__pycache__/0011_auto_20200929_1006.cpython-38.pyc
+Final Project/mmaint/migrations/__pycache__/0012_auto_20201008_1110.cpython-38.pyc
+Final Project/mmaint/migrations/__pycache__/0013_auto_20201012_1146.cpython-38.pyc
+Final Project/mmaint/migrations/__pycache__/0013_auto_20201015_0944.cpython-38.pyc
+Final Project/mmaint/migrations/__pycache__/0014_auto_20201015_1031.cpython-38.pyc
+Final Project/mmaint/migrations/__pycache__/0014_machinedownreports_total.cpython-38.pyc
+Final Project/mmaint/migrations/__pycache__/0015_auto_20201019_0839.cpython-38.pyc
+Final Project/mmaint/migrations/__pycache__/0015_remove_machinedownreports_total.cpython-38.pyc
+Final Project/mmaint/migrations/__pycache__/0016_auto_20201122_0903.cpython-38.pyc
+.VSCodeCounter/2020-11-30_06-46-36/details.md
+.VSCodeCounter/2020-11-30_06-46-36/results.csv
+.VSCodeCounter/2020-11-30_06-46-36/results.md
+.VSCodeCounter/2020-11-30_06-46-36/results.txt

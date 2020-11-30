@@ -1,0 +1,248 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load humanize %}
+{% load static %}
+{% block title%}
+Machine Maintenance: Detail of {{ object.machine_name }}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+	<div class="row mt-2">
+		<div class="col-sm-12 mt-2">
+			<div class="card bg-light">
+				<div class="card-header bg-light">
+                    <h2 class="card-title text-center">{{ object.machine_name}}</h2>
+                <div class="card-title text-right mb-2">
+                <!-- Back Button -->
+                    <a href="{% url 'machinestatuslist' %}" class="btn btn-alt btn-outline-success" style="float: left;">Back</a>
+                <!-- Edit Machine Button -->
+                    <a href="{% url 'machinestatusupdate' object.id %}" class="btn btn-alt btn-outline-info mt-2">Edit Machine</a></div></div>
+                <div class="card-body bg-light">
+    <!-- ############################################################################
+        ################################ Table Begin ################################
+        #############################################################################
+        #                         Main Machine Information                          #
+        #############################################################################
+        ############################################################################# -->
+                    <table class="table table-responsive-md pb-0 mb-0  borderless">
+                        <thead class="bg-dark">
+                            <tr>
+                                <th colspan=4 scope="col" class="text-light text-center h2">Machine Information</th>
+                            </tr>
+                            <tr class="text-light">
+                                <th scope="col" class="align-middle text-center h5">Machine Name</th>
+                                <th scope="col" class="align-middle text-center h5">Work Station Number</th>
+                                <th scope="col" class="align-middle text-center h5">Machine Row</th>
+                                <th scope="col" class="align-middle text-center h5">Current<br/>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="height: 50px; font-size:20px;">
+                                <td class="align-middle text-center">{{ object.machine_name }}</td>
+                                <td class="align-middle text-center">{{ object.machine_e2name }}</td>
+                                <td class="align-middle text-center">{{ object.get_machine_row_display }}</td>
+                                <td class="align-middle text-center">{{ object.get_status_display }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+    <!-- ############################################################################
+        ################################# Table Ends ################################
+        #############################################################################
+        ################################ Table Begin ################################
+        #############################################################################
+        #                        Machine Downtime Information                       #
+        #############################################################################
+        ############################################################################# -->
+                    <table class="table table-responsive-md pb-0 mb-0 borderless">
+                        <thead class="bg-dark">
+                            <tr class="text-light">
+                                <th colspan=4 scope="col" class="text-center align-middle h2 text-light">Downtime Information</th>
+                            </tr>
+                            <tr class="text-light no-border">
+                                <th scope="col" class="align-middle text-center h5">Times Down<br/>
+                                <small><em class="text-warning">Life of Machine</em></small></th>
+                                <th scope="col" class="align-middle text-center h5">Downtime<br/>
+                                    <small><em class="text-warning">Life of Machine (hours)</em></small></th>
+                                <th scope="col" class="align-middle text-center h5">Times Down<br/>
+                                    <small><em class="text-warning">Current Year</em></small></th>
+                                <th scope="col" class="align-middle text-center h5">Downtime<br/>
+                                    <small><em class="text-warning">Current Year (hours)</em></small></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="height: 50px; font-size:20px;">
+                                <td class="align-middle text-center">{{ machinedown_count_life }}</td>
+                                <td class="align-middle text-center">{{ totalDowntime }}</td>
+                                <td class="align-middle text-center">{{ machinedown_count_year }}</td>
+                                <td class="align-middle text-center">{{ totalDowntime_year }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+    <!-- ############################################################################
+        ################################# Table Ends ################################
+        #############################################################################
+        ################################ Table Begin ################################
+        #############################################################################
+        #                          Current Downtime Record                          #
+        #                        Only Shows When Not Running                        #
+        #############################################################################
+        ############################################################################# -->
+                    {% if object.get_status_display == 'Down for Repair' or object.get_status_display == "Down for PM" or object.get_status_display == "Fixture Indication" %}
+                    <table class="table table-responsive-md pb-0 mb-0  borderless">
+                        <thead class="bg-dark">
+                            <tr class="text-light" style="height: 100px;">
+                                <th scope="col" class="text-center align-middle h5">Date / Time</th>
+                                <th scope="col" class="text-center align-middle h5">Downtime Age
+                                    <small><br/>
+                                        <em class="text-warning">Straight downtime.</em><br/>
+                                        <em class="text-warning">Does not account for weekends!</em>
+                                    </small></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="height: 50px; font-size:20px;">
+                                <td class="text-center align-middle">{{ object.downtime }}</td>
+                                <td class="text-center align-middle">{{ object.downtime|naturaltime }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    {% endif %}
+    <!-- ############################################################################
+        ################################# Table Ends ################################
+        #############################################################################
+        ################################ Table Begin ################################
+        #############################################################################
+        #                              Temporary Note                               #
+        #                        Only Shows When Not Running                        #
+        #############################################################################
+        ############################################################################# -->
+                    {% if object.notes|length > 1 %}
+                    <table class="table table-responsive-md pb-0 mb-0  borderless">
+                        <thead class="bg-dark">
+                            <tr class="text-light" style="height: 75px;">
+                                <th scope="col" class="align-middle text-center h2 text-light">Temporary Note</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="height: 50px; font-size:20px;">
+                                <td class="align-middle">{{ object.notes }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    {% endif %}
+    <!-- ############################################################################
+        ################################# Table Ends ################################
+        #############################################################################
+        ################################ Table Begin ################################
+        #############################################################################
+        #                          Machine Downtime Records                         #
+        #############################################################################
+        ############################################################################# -->
+                    {% if machinedown_count_year >= 1 %}
+                    <table class="table table-responsive-md pb-0 mb-0 borderless" id="res">
+                        <thead class="bg-dark">
+                                <tr class="text-light">
+                                    <th colspan=4 class="text-center h2 text-light">Machine Downtime Records</th>
+                                </tr>
+                            <tr class="text-light">
+                                <th scope="col" class="text-center h5">Update</th>
+                                <th scope="col" class="text-center h5">Downtime</th>
+                                <th scope="col" class="text-center h5">Uptime</th>
+                                <th scope="col" class="text-center h5">Down Duration (hours)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if machinedown_count_year >= 6 %}
+                            <tr style="height: 75px;">
+                                <td colspan=4 class="align-middle text-center h6 table-warning">
+                                    <em>Records have exceeded the five current records. Click button for more!</em>
+                                </td>
+                            </tr>
+                            <tr style="height: 75px;">
+                                <td colspan=4 class="align-middle text-center h5 table-warning">
+                                    <a href="{% url 'machinedownreport-list' object.id %}" class="btn btn-alt btn-info">Click for More Records</a>
+                                </td>
+                            </tr>
+                            {% endif %}
+                        {% for object in machinedown_all %}    
+                            <tr class="align-middle">
+                                <td class="align-middle text-center"><a href="{% url 'machinedownreport_update' object.id %}" class="btn btn-alt btn-primary">Update</a></td>
+                                <td class="align-middle text-center">{{ object.starttime }}</td>
+                                <td class="align-middle text-center">{{ object.endtime }}</td>
+                                <td class="align-middle text-center">{{ object.total }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                    {% endif %}
+    <!-- ############################################################################
+        ################################# Table Ends ################################
+        #############################################################################
+        ################################ Table Begin ################################
+        #############################################################################
+        #                           Repair Action Records                           #
+        #############################################################################
+        ############################################################################# -->
+                    {% if pncount >= 1 %}
+                    <table class="table table-responsive-md pb-0 mb-0  borderless">
+                        <thead class="bg-dark">
+                            <tr class="text-light" style="height: 50px;">
+                                <th scope="col" colspan=6 class="text-center h2 text-light">Repair Action Notes</th>
+                            </tr>
+                            <tr class="text-light" style="height: 50px;">
+                                <th scope="col" class="align-middle text-center"><h5>Update</h5></th>
+                                <th scope="col" class="align-middle text-center"><h5>Date</h5><small>DD-MM-YYYY</small></th>
+                                <th scope="col" class="align-middle text-center"><h5>Time</h5><small>24 hr Time</small></th>
+                                <th scope="col" class="align-middle text-center"><h5>Reason</h5></th>
+                                <th scope="col" colspan=2 class="align-middle text-center"><h5>Note</h5></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% if pncount >= 6 %}
+                            <tr style="height: 75px;">
+                                <td colspan=5 class="align-middle text-center alt-font table-warning">
+                                    <em>The repair action notes listed below is from the most recent five records.</em><br/>
+                                    <em class="text-center">Records have exceeded the five current records. Click button for more!</em>
+                                </td>
+                            </tr>
+                            <tr style="height: 75px;">
+                                <td colspan=5 class="align-middle text-center table-warning">
+                                    <a href="{% url 'permanentrecord-list' object.id %}" class="btn btn-alt btn-info mr-2">Click for More Records</a>
+                                    <a href="{% url 'permanentrecord-create' object.id %}" class="btn btn-alt btn-warning">Add Repair Action Note</a>
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan=5 class="align-middle text-center table-warning">
+                                    <em>The repair action notes listed below is from the most recent five records.</em><br/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan=5 class="align-middle text-center table-warning">
+                                    <a href="{% url 'permanentrecord-create' object.id %}" class="btn btn-alt btn-warning">Add Repair Action Note</a>
+                                </td>
+                            </tr>
+                        {% endif %}
+                    {% for notes in permanentnotes %}
+                            <tr>
+                                <td class="align-middle text-center" style="width:10%;"><a href="{% url 'permanentrecord-update' notes.id %}" class="btn btn-alt btn-primary">Update</a></td>
+                                <td class="align-middle text-center" style="width:12%;">{{ notes.date|date:"d-m-y" }}</td>
+                                <td class="align-middle text-center" style="width:10%;">{{ notes.time|time:"H:i" }}</td>
+                                <td class="align-middle text-center" style="width:20%;">{{ notes.get_reason_display }}</td>
+                                <td class="align-middle text-left" style="width:48%;">{{ notes.note|linebreaksbr }}</td>
+                            </tr>
+                    {% empty %}
+                            <tr>
+                                <td colspan=6 class="align-middle text-center">No Repair Action Notes</td>
+                            </tr>
+                    {% endfor%}
+                        </tbody>
+                    </table>
+                {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
